@@ -37,11 +37,18 @@ img{
     width: 990px;
   }
 }
-
+pre{
+  height: 50px;
+  margin-top: 11px;
+}
 .enter_section {
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
+}
+
+.btn-success{
+  margin-bottom: 3px;
 }
 
 #enter_text {
