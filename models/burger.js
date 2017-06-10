@@ -6,6 +6,7 @@ var burger = {
       cb(res);
     });
   },
+
   create: function (name, cb) {
     orm.create("burgers", [
       "burger_name", "devoured"
@@ -13,6 +14,7 @@ var burger = {
       name, false
     ], cb);
   },
+  
   update: function (id, cb) {
     var condition = "id=" + id;
     orm.update("burgers", {
