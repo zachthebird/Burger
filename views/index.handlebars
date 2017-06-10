@@ -4,8 +4,8 @@
 			<img class='img-responsive' src="/assets/images/burger.png" alt="burger" />
 			<h1> Burger Eatin' Time! </h1>
 		</div>
-		<div class="col-xs-6 text-center" class="task">
-			<div class="row">
+		{{!--<div class="col-xs-6 text-center" class="task">--}}
+			{{!--<div class="row">--}}
 			  {{#each burger_data}}
 			  	{{#unless this.devoured}}
 				<div class="col-xs-9 text-center">
@@ -21,8 +21,8 @@
 				</div>
 				{{/unless}}
 			  {{/each}}
-			</div>
-		</div>
+			{{!--</div>--}}
+		{{!--</div>--}}
 		<div class="col-xs-6 text-center" class="task">
 			  {{#each burger_data}}
 			  	{{#if this.devoured}}
