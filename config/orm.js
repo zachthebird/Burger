@@ -1,39 +1,73 @@
-var connection = require('./connection.js');
+var connection = require("./connection.js");
+
+function printQuestionMarks(num) {
+  var arr = [];
+
+  for (var i = 0; i < num; i++) {
+    arr.push("?");
+  }
+
+  return arr.toString();
+}
+
+function objToSql(ob) {
+  var arr = [];
+
+  for (var key in ob) {
+    arr.push(key + "=" + ob[key]);
+  }
+
+  return arr.toString();
+}
 
 var orm = {
-    selectAll: function(tableName, cb){
-        var queryString = 'SELECT * FROM ' + tableName + ';';
-        connection.query(queryString, function(err, result){
-            if(err){
-                throw err;
-            } else {
-                cb(result);
-            }
-        });
-    },
+  all: function (tableInput, cb) {
+    var queryString = "SELECT * FROM " + tableInput + ";";
+    connection.query(queryString, function (err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
 
-    insertNew: function(table, cols, vals, cb){
-        var queryString = 'INSERT INTO ?? (??) VALUES (?);';
+  create: function (table, cols, vals, cb) {
+    var queryString = "INSERT INTO " + table;
 
-        connection.query(queryString, [table, cols, vals], function(err, res){
-            if (err){
-                throw err; 
-            } else {
-                cb(res);
-            }
-        });
-    },
+    queryString += " (";
+    queryString += cols.toString();
+    queryString += ") ";
+    queryString += "VALUES (";
+    queryString += printQuestionMarks(vals.length);
+    queryString += ") ";
 
-    update: function(table, tableColumn, newVal, burgId, cb){
-        var queryString = "UPDATE ?? SET ?? TO ? WHERE id = ?" ;
-        connection.query(queryString, [table, tableColumn, newVal, burgId], function(err, res){
-            if(err){
-                throw err;
-            } else {
-                cb(res);
-            }
-        });
-    }
+    console.log(queryString);
+
+    connection.query(queryString, vals, function (err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+
+
+  update: function (table, objColVals, condition, cb) {
+    var queryString = "UPDATE " + table;
+
+    queryString += " SET ";
+    queryString += objToSql(objColVals);
+    queryString += " WHERE ";
+    queryString += condition;
+
+    console.log(queryString);
+    connection.query(queryString, function (err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  }
 };
 
 module.exports = orm;
